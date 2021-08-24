@@ -1,7 +1,26 @@
 package com.boottuto.boottuto.car;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+@Entity
+@Table
 public class Car {
-	private int id;
+	@Id
+	@SequenceGenerator(
+		name = "car_sequence",
+		sequenceName = "car_sequence",
+		allocationSize = 1
+	)
+	@GeneratedValue(
+		strategy = GenerationType.SEQUENCE,
+		generator = "car_sequence"
+	)
+	private Long id;
 	private String manufacturer;
 	private int horspower;
 	private String color;
@@ -9,24 +28,24 @@ public class Car {
 	public Car() {
 	}
 	
-	public Car(final int id, final String manufacturer, final int horspower, final String color) {
+	public Car(Long id, String manufacturer, int horspower, String color) {
 		this.id = id;
 		this.manufacturer = manufacturer;
 		this.horspower = horspower;
 		this.color = color;
 	}
 	
-	public Car(final String manufacturer, final int horspower, final String color) {
+	public Car(String manufacturer, int horspower, String color) {
 		this.manufacturer = manufacturer;
 		this.horspower = horspower;
 		this.color = color;
 	}
 	
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 	
-	public void setId(final int id) {
+	public void setId(final Long id) {
 		this.id = id;
 	}
 	
@@ -53,4 +72,12 @@ public class Car {
 	public void setColor(final String color) {
 		this.color = color;
 	}
+
+	@Override
+	public String toString() {
+		return "Car [color=" + color + ", horspower=" + horspower + ", id=" + id + ", manufacturer=" + manufacturer
+				+ "]";
+	}
+
+	
 }
