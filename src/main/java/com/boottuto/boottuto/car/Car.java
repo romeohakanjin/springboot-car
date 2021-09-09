@@ -1,11 +1,15 @@
 package com.boottuto.boottuto.car;
 
+import java.time.LocalDate;
+import java.time.Period;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table
@@ -24,21 +28,26 @@ public class Car {
 	private String manufacturer;
 	private int horspower;
 	private String color;
+	@Transient
+	private int timeOnRoad;
+	private LocalDate year;
 	
 	public Car() {
 	}
 	
-	public Car(Long id, String manufacturer, int horspower, String color) {
+	public Car(final Long id, final String manufacturer, final int horspower, final String color, final LocalDate year) {
 		this.id = id;
 		this.manufacturer = manufacturer;
 		this.horspower = horspower;
 		this.color = color;
+		this.year = year;
 	}
 	
-	public Car(String manufacturer, int horspower, String color) {
+	public Car(final String manufacturer, final int horspower, final String color, final LocalDate year) {
 		this.manufacturer = manufacturer;
 		this.horspower = horspower;
 		this.color = color;
+		this.year = year;
 	}
 	
 	public Long getId() {
@@ -73,10 +82,26 @@ public class Car {
 		this.color = color;
 	}
 
+	public LocalDate getYear() {
+		return year;
+	}
+
+	public void setYear(final LocalDate year) {
+		this.year = year;
+	}
+
+	public int getTimeOnRoad() {
+		return Period.between(year, LocalDate.now()).getYears();
+	}
+
+	public void setTimeOnRoad(final int timeOnRoad) {
+		this.timeOnRoad = timeOnRoad;
+	}
+
 	@Override
 	public String toString() {
 		return "Car [color=" + color + ", horspower=" + horspower + ", id=" + id + ", manufacturer=" + manufacturer
-				+ "]";
+				+ ", timeOnRoad=" + timeOnRoad + ", year=" + year + "]";
 	}
 
 	
